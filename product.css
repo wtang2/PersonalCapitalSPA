@@ -1,0 +1,142 @@
+.search{
+   margin:50px;  
+}
+.search h3{
+	text-align: center;
+}
+.search-div{
+	clear: both;
+	text-align: left;
+}
+.button-div{
+	display:inline-block; 
+} 
+label{
+	display: block;
+	text-align: left;
+	margin-bottom:10px; 
+}
+#result{
+	margin-top:100px;
+}
+#error{
+	color:red;
+	padding: 10px 0px;
+}
+.highlight{
+	color: #5200cc;
+	font-weight:bold;
+}
+hr{
+	margin-bottom:20px; 
+}
+table{  
+	border-collapse: collapse;  
+    border-color: gray;    
+    border-spacing: 5px;
+}
+th{
+	text-align:center;
+	padding: 15px 25px;
+}
+td{
+	text-align: left;
+	padding: 15px 25px;
+}
+table th {
+    color: white;
+    
+	background-color: rgba(0,0,0,0.8);
+}
+table tr:nth-child(even) {
+    background-color: #eee;
+}
+table tr:nth-child(odd) {
+    background-color: #fff;
+}
+a{ 
+    text-decoration: none;
+}
+a:hover {
+    cursor:pointer;
+}
+a:visited {
+    color: blue;
+}
+body{
+	text-align: center;
+}
+#search-query{ 
+  max-width: 73%;
+  width: 73%;
+  height: 30px;
+  padding: 0px 15px;
+  font-size: 16px;
+  border: 1px solid grey ;
+}
+#search-button{
+	margin: 0px 20px;
+	padding: 7px 13px;
+	background-color: rgba(0,0,0,0.8);
+	color:white;
+	border-radius: 5px;
+  	font-size: 13px;
+}
+#clear-button{
+	margin: 0px 5px;
+	padding: 7px 13px;
+	background-color:blue;
+	color:white;
+	border-radius: 5px;
+	font-size: 13px;
+}
+#go-top-button{  
+	display: none;
+	border-radius: 7px;
+	padding: 13px;
+	background-color: rgba(0,0,0,0.8);
+	color: white;  
+    bottom: 20px;
+    display: block;  
+    position: fixed;
+    right: 1em;
+    width: 100px;
+    z-index: 999; 
+} 
+#go-top-button:before{
+	content: '\25b2';}
+
+.sortorder:after {
+  	content: '\25b2';   // BLACK UP-POINTING TRIANGLE
+}
+.sortorder.reverse:after {
+ 	content: '\25bc';   // BLACK DOWN-POINTING TRIANGLE
+}
+th button{ 
+	margin-left:20px;
+	padding: 7px 15px;
+	border-radius: 7px;
+	background-color: white;
+	font-size: 13px;
+}
+@media only screen and (max-width: 955px) { 
+	.button-div{
+		display:block; 
+		margin-top:25px; 
+		text-align: center;
+	} 
+	#search-query{
+		max-width: 98%;
+		width: 98%;
+	}
+}
+@media only screen and (max-width: 480px) {  
+	.button-div{  
+		float:none;
+	} 
+	th button{ 
+		text-align :center; 
+		margin-top:15px; 
+		display: block;
+	}
+}
