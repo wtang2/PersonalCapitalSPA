@@ -13,4 +13,4 @@
 <li>Show total number of results</li>
 <li>User can sort column by product name or product type</li>
 <li>Each product name has a link to the financial institution</li>
-<li>Matched keyword were highlighted in purple color.</li>
+<li>Matched keywords were highlighted in purple color.</li>
