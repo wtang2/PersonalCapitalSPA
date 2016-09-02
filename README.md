@@ -1,6 +1,6 @@
 # PersonalCapitalSPA
 <h3>JSON file</h3>
-<li>THe file was uploaded to local server at url:'http://localhost:8000/Documents/interview/PersonalCapitalSPA/products.json'</li>
+<li>THe file was uploaded to local server at url: 'http://localhost:8000/Documents/interview/PersonalCapitalSPA/products.json'</li>
 
 <h3>Steps:</h3>
 <li>Enter a search keyword at the input text</li>
