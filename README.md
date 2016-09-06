@@ -4,7 +4,7 @@
 
 <h3>Steps:</h3>
 <li>Enter a search keyword at the input text - A list of autocomplete search suggestion will be shown. (Matched keywords were highlighted in purple color) </li>
-<li>When user click on the VIEW ALL / search button, result table with product name and product type will be shown.</li>
+<li>When user click on 'VIEW ALL' link / 'SEARCH' button, a table with product name and product type will be shown.</li>
 
 <h3>Validation: </h3>
 <li>Check if the user has entered some text into the text input</li>
