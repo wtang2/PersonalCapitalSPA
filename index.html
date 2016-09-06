@@ -9,15 +9,31 @@
     <title>Search for financial institution - Single Page Application | Woon Jeen</title>  
     <link href="product.css" rel="stylesheet"> 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>    
-    <script src="jquery.js"></script>   
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"> </script> 
 </head>
 <body ng-app="products" ng-controller="ctrl"> 
     <div class="search"> 
         <h3>Run a Search for Financial Institutions</h3>
         <div class="search-div">
             <label for=search-query>Keywords </label> 
-            <input type="text" id="search-query" name="query" placeholder="Please enter product name"></input>
+            <input type="text" id="search-query" name="query" placeholder="Please enter product name"></input> 
             <div class="button-div">
+                <button id="search-button" ng-click="submit()"> Search</button> 
+                <button id="clear-button" ng-click="clear()"> Clear</button> 
+            </div>
+            <div ng-show="auto_searchResult.length>1" id="autocomplete" >
+                <h4>Suggested Searches</h4>
+                <div id="autocomplete_list" ng-repeat="result in auto_searchResult|orderBy:'name'|limitTo:6">
+                    <a ng-href="{{result.link}}" target="_blank">
+                        <li target="_blank" ng-bind-html="result.name"></li> 
+                    </a>   
+                </div>
+                <a ng-click="submit()">
+                    <hr>
+                    <li>VIEW ALL ({{auto_searchResult.length}})</li>
+                </a>
+            </div>
+             <div class="button-div-mobile">
                 <button id="search-button" ng-click="submit()"> Search</button> 
                 <button id="clear-button" ng-click="clear()"> Clear</button> 
             </div>
@@ -41,13 +57,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="result in searchResult|orderBy:order:reverse" >  
+                <tr ng-repeat="i in searchResult|orderBy:order:reverse" >  
                     <td >
-                        <a ng-href="{{result.link}}" target="_blank">
-                            <span target="_blank" ng-bind-html="result.name"></span> 
+                        <a ng-href="{{i.link}}" target="_blank">
+                            <span target="_blank" ng-bind="i.name"></span> 
                         </a>
                     </td>
-                    <td ng-bind="result.type"></td> 
+                    <td ng-bind="i.type"></td> 
                 </tr>  
             </tbody> 
         </table>  
@@ -73,20 +89,64 @@
     angular.module('products', []) 
         .controller('ctrl', function($scope,$sce) {    
             $scope.reverse = true;
+            // Sort results by product name or product type
             $scope.changeOrder = function (order) {
                 $scope.reverse =  !$scope.reverse ;
                 $scope.order = order;
-            };
-            $scope.submit = function(){   
+            }; 
+            // Show autocomplete search suggestion when user type in the search box
+            $('#search-query').attr('autocomplete', 'off').on('keyup change', function() {
+                var auto_products =[];  
+                var auto_search = $("#search-query").val();      
+                // use AJAX to search product names for the term the user entered into the text input. 
+                $.ajax({
+                    url:"http://localhost:8000/Documents/Website-MyPortfolio-master/PersonalCapitalSPA/products.json", 
+                    type: "GET",
+                    dataType: "json", 
+                    crossDomain: true,
+                    success: function(data) {   
+                        for (i in data.products){
+                            auto_products.push(data.products[i]); 
+                         } 
+                    }, 
+                    error: function (xhr,status,error) { 
+                      console.log(error,status,xhr);
+                    },
+                    complete: function (data) { 
+                        $scope.auto_searchResult = [];  
+                        $scope.hiddenError = false;
+                        $.each(auto_products, function(i, v) {
+                            var regex = new RegExp(auto_search, "i");
+                            if (v.name.search(regex) != -1) { 
+                                // Product type: replace '_' with space   
+                                var type = v.type.replace(/_/, " "); 
+                                // Highlight product name which match the search term  
+                                var name=v.name.replace(regex,  '<span class="highlight">$&</span>');  
+                                name = $sce.trustAsHtml(name);
+                                $scope.auto_searchResult.push({ name: name, type: type, link: v.url }); 
+                                $scope.$apply();
+                                return;
+                            }
+                        });  
+                    }
+                })
+            })
+
+            // When the user click on 'search' button
+            $scope.submit = function(){    
+                $scope.auto_searchResult = []; 
+                var products =[];  
+                // Get the text which was entered into the input box  
                 var search = $("#search-query").val();
+                // Validate if the user has entered some text into the input box
                 if(search.length <1){  
                     $scope.hiddenError = true;
                     $scope.hiddenTable = false;
                     return;
                 }        
-                var products =[];  
+                // use AJAX to search product names for the term the user entered into the text input. 
                 $.ajax({
-                    url:"http://localhost:8000/Documents/interview/products.json", 
+                    url:"http://localhost:8000/Documents/Website-MyPortfolio-master/PersonalCapitalSPA/products.json", 
                     type: "GET",
                     dataType: "json", 
                     crossDomain: true,
@@ -105,10 +165,9 @@
                         $.each(products, function(i, v) {
                             var regex = new RegExp(search, "i");
                             if (v.name.search(regex) != -1) { 
-                                var type = v.type.replace(/_/, " "); 
-                                var name=v.name.replace(regex,  '<span class="highlight">$&</span>');  
-                                name = $sce.trustAsHtml(name);
-                                $scope.searchResult.push({ name: name, type: type, link: v.url }); 
+                                // Product type: replace '_' with space   
+                                var type = v.type.replace(/_/, " ");   
+                                $scope.searchResult.push({ name: v.name, type: type, link: v.url }); 
                                 $scope.$apply();
                                 return;
                             }
@@ -116,8 +175,10 @@
                     }
                 })
             }   
+            // Reset search query and result table
             $scope.clear = function(){   
                 $("#search-query").val("");
+                $scope.auto_searchResult = [];  
                 $scope.hiddenTable = false;
             }    
         })    
