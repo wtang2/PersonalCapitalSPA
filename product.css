@@ -1,3 +1,21 @@
+li{
+	list-style-type: none;
+}
+#autocomplete a li:last-child{ 
+	margin-bottom: 15px;
+}
+#autocomplete a li:last-child:hover{ 
+	cursor:pointer;
+}
+#autocomplete{
+	max-width: 73%;
+    width: 73%;
+	padding: 0px 15px;
+	border:1px solid black;
+}
+#autocomplete_list{ 
+	padding: 5px 3px 1px 0px;
+}
 .search{
    margin:50px;  
 }
@@ -10,6 +28,9 @@
 }
 .button-div{
 	display:inline-block; 
+} 
+.button-div-mobile{
+	display:none; 
 } 
 label{
 	display: block;
@@ -121,11 +142,14 @@ th button{
 }
 @media only screen and (max-width: 955px) { 
 	.button-div{
+		display: none;
+	}
+	.button-div-mobile{
 		display:block; 
 		margin-top:25px; 
 		text-align: center;
 	} 
-	#search-query{
+	#autocomplete,#search-query{
 		max-width: 98%;
 		width: 98%;
 	}
