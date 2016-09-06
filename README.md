@@ -17,4 +17,4 @@
 <h3 style="margin-left:350px">Screenshot of the Single Page Application</h3>
 
 ![Screenshot of the single page application ](/Autocomplete.png "Screenshot")
-![Screenshot of the single page application ](/image_SPA.png "Screenshot")
+![Screenshot of the single page application ](/Result_Screenshot.png "Screenshot")
